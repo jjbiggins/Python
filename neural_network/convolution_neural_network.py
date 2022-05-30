@@ -42,8 +42,9 @@ class CNN:
         self.rate_thre = rate_t
         self.w_conv1 = [
             np.mat(-1 * np.random.rand(self.conv1[0], self.conv1[0]) + 0.5)
-            for i in range(self.conv1[1])
+            for _ in range(self.conv1[1])
         ]
+
         self.wkj = np.mat(-1 * np.random.rand(self.num_bp3, self.num_bp2) + 0.5)
         self.vji = np.mat(-1 * np.random.rand(self.num_bp2, self.num_bp1) + 0.5)
         self.thre_conv1 = -2 * np.random.rand(self.conv1[1]) + 1
@@ -71,7 +72,7 @@ class CNN:
         with open(save_path, "wb") as f:
             pickle.dump(model_dic, f)
 
-        print("Model saved： %s" % save_path)
+        print(f"Model saved： {save_path}")
 
     @classmethod
     def ReadModel(cls, model_path):
@@ -122,11 +123,12 @@ class CNN:
         Size_FeatureMap = int((size_data - size_conv) / conv_step + 1)
         for i_map in range(num_conv):
             featuremap = []
-            for i_focus in range(len(data_focus)):
+            for data_focu in data_focus:
                 net_focus = (
-                    np.sum(np.multiply(data_focus[i_focus], w_convs[i_map]))
+                    np.sum(np.multiply(data_focu, w_convs[i_map]))
                     - thre_convs[i_map]
                 )
+
                 featuremap.append(self.sig(net_focus))
             featuremap = np.asmatrix(featuremap).reshape(
                 Size_FeatureMap, Size_FeatureMap
@@ -179,8 +181,7 @@ class CNN:
         # expanding matrix to one dimension list
         data_mat = np.asarray(data_mat)
         shapes = np.shape(data_mat)
-        data_expanded = data_mat.reshape(1, shapes[0] * shapes[1])
-        return data_expanded
+        return data_mat.reshape(1, shapes[0] * shapes[1])
 
     def _calculate_gradient_from_pool(
         self, out_map, pd_pool, num_map, size_map, size_pooling
@@ -294,7 +295,7 @@ class CNN:
             all_mse.append(mse)
 
         def draw_error():
-            yplot = [error_accuracy for i in range(int(n_repeat * 1.2))]
+            yplot = [error_accuracy for _ in range(int(n_repeat * 1.2))]
             plt.plot(all_mse, "+-")
             plt.plot(yplot, "r--")
             plt.xlabel("Learning Times")

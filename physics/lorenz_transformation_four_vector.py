@@ -200,6 +200,6 @@ if __name__ == "__main__":
     # Substitute symbols with numerical values:
     values = np.array([1, 1, 1, 1])
     sub_dict = {ct: c * values[0], x: values[1], y: values[2], z: values[3]}
-    numerical_vector = [four_vector[i].subs(sub_dict) for i in range(0, 4)]
+    numerical_vector = [four_vector[i].subs(sub_dict) for i in range(4)]
 
     print(f"\n{numerical_vector}")

@@ -35,9 +35,7 @@ class Heap:
 
     def parent_index(self, child_idx: int) -> int | None:
         """return the parent index of given child"""
-        if child_idx > 0:
-            return (child_idx - 1) // 2
-        return None
+        return (child_idx - 1) // 2 if child_idx > 0 else None
 
     def left_child_idx(self, parent_idx: int) -> int | None:
         """
@@ -63,21 +61,22 @@ class Heap:
         """
         correct a single violation of the heap property in a subtree's root.
         """
-        if index < self.heap_size:
-            violation: int = index
-            left_child = self.left_child_idx(index)
-            right_child = self.right_child_idx(index)
-            # check which child is larger than its parent
-            if left_child is not None and self.h[left_child] > self.h[violation]:
-                violation = left_child
-            if right_child is not None and self.h[right_child] > self.h[violation]:
-                violation = right_child
-            # if violation indeed exists
-            if violation != index:
-                # swap to fix the violation
-                self.h[violation], self.h[index] = self.h[index], self.h[violation]
-                # fix the subsequent violation recursively if any
-                self.max_heapify(violation)
+        if index >= self.heap_size:
+            return
+        violation: int = index
+        left_child = self.left_child_idx(index)
+        right_child = self.right_child_idx(index)
+        # check which child is larger than its parent
+        if left_child is not None and self.h[left_child] > self.h[violation]:
+            violation = left_child
+        if right_child is not None and self.h[right_child] > self.h[violation]:
+            violation = right_child
+        # if violation indeed exists
+        if violation != index:
+            # swap to fix the violation
+            self.h[violation], self.h[index] = self.h[index], self.h[violation]
+            # fix the subsequent violation recursively if any
+            self.max_heapify(violation)
 
     def build_max_heap(self, collection: Iterable[float]) -> None:
         """build max heap from an unsorted array"""

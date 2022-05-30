@@ -55,8 +55,7 @@ def fib_iterative(n: int) -> list[int]:
     if n == 0:
         return [0]
     fib = [0, 1]
-    for _ in range(n - 1):
-        fib.append(fib[-1] + fib[-2])
+    fib.extend(fib[-1] + fib[-2] for _ in range(n - 1))
     return fib
 
 
