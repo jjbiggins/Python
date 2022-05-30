@@ -114,18 +114,18 @@ def zeller(date_input: str) -> str:
         )
 
     # Get datetime obj for validation
-    dt_ck = datetime.date(int(y), int(m), int(d))
+    dt_ck = datetime.date(y, m, d)
 
     # Start math
     if m <= 2:
-        y = y - 1
-        m = m + 12
+        y -= 1
+        m += 12
     # maths var
     c: int = int(str(y)[:2])
     k: int = int(str(y)[2:])
     t: int = int(2.6 * m - 5.39)
-    u: int = int(c / 4)
-    v: int = int(k / 4)
+    u: int = c // 4
+    v: int = k // 4
     x: int = int(d + k)
     z: int = int(t + u + v + x)
     w: int = int(z - (2 * c))
@@ -136,9 +136,7 @@ def zeller(date_input: str) -> str:
     if f != convert_datetime_days[dt_ck.weekday()]:
         raise AssertionError("The date was evaluated incorrectly. Contact developer.")
 
-    # Response
-    response: str = f"Your date {date_input}, is a {days[str(f)]}!"
-    return response
+    return f"Your date {date_input}, is a {days[str(f)]}!"
 
 
 if __name__ == "__main__":

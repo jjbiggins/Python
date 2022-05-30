@@ -176,8 +176,7 @@ if __name__ == "__main__":
     print("------")
 
     greedy_bf = GreedyBestFirst(init, goal)
-    path = greedy_bf.search()
-    if path:
+    if path := greedy_bf.search():
         for pos_x, pos_y in path:
             grid[pos_x][pos_y] = 2
 
